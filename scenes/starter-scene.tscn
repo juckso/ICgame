@@ -1,31 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://tilesets/starter-tileset.tres" type="TileSet" id=1]
-[ext_resource path="res://scenes/player-scene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Dungeon_Master.gd" type="Script" id=1]
+[ext_resource path="res://scripts/Grid.gd" type="Script" id=2]
+[ext_resource path="res://scenes/piece-scene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/player-scene.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/Bot.gd" type="Script" id=5]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" index="0"]
 
-[node name="TileMap" type="TileMap" parent="." index="0"]
+[node name="Dungeon Master" type="Node2D" parent="." index="0"]
 
-mode = 0
-tile_set = ExtResource( 1 )
-cell_size = Vector2( 50, 50 )
-cell_quadrant_size = 16
-cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
-cell_half_offset = 2
-cell_tile_origin = 0
-cell_y_sort = false
-cell_clip_uv = false
-collision_use_kinematic = false
-collision_friction = 1.0
-collision_bounce = 0.0
-collision_layer = 1
-collision_mask = 1
-occluder_light_mask = 1
-format = 1
-tile_data = PoolIntArray( -65536, 0, 0, -65535, 0, 0, -65534, 0, 0, -65533, 0, 0, -65532, 0, 0, -65531, 0, 0, -65530, 0, 0, 65535, 0, 0, 7, 0, 0, 131071, 0, 0, 65543, 0, 0, 196607, 0, 0, 131079, 0, 0, 262143, 0, 0, 196615, 0, 0, 327679, 0, 0, 262151, 0, 0, 327680, 0, 0, 327681, 0, 0, 327682, 0, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 0, 0, 327687, 0, 0 )
-_sections_unfolded = [ "Cell" ]
+script = ExtResource( 1 )
 
-[node name="Player" parent="." index="1" instance=ExtResource( 2 )]
+[node name="Grid" type="Node2D" parent="Dungeon Master" index="0"]
+
+script = ExtResource( 2 )
+GRID_WIDTH = 100
+GRID_HEIGHT = 100
+CELL_WIDTH = 64
+CELL_HEIGHT = 64
+
+[node name="Piece" parent="Dungeon Master/Grid" index="0" instance=ExtResource( 3 )]
+
+position = Vector2( 297.572, 56.2813 )
+_sections_unfolded = [ "Transform" ]
+player_character_path = NodePath("../../Player")
+
+[node name="Player" parent="Dungeon Master" index="1" instance=ExtResource( 4 )]
+
+margin_right = 64.0
+margin_bottom = 64.0
+_sections_unfolded = [ "Rect" ]
+
+[node name="Bot" type="Node2D" parent="Dungeon Master" index="2"]
+
+script = ExtResource( 5 )
 
 
