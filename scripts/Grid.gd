@@ -27,13 +27,6 @@ func _ready():
 				child.set_board(self)
 				grid[child_pos.x][child_pos.y] = child
 
-func get_pieces():
-	var pieces = []
-	for x in range(GRID_WIDTH):
-		for y in range(GRID_HEIGHT):
-			pieces.append({"x": x, "y": y, "piece": grid[x][y]})
-	return pieces
-
 func pos_to_gpos(pos):
 	var gpos = pos
 	gpos.x = floor(gpos.x/CELL_WIDTH)
@@ -41,36 +34,29 @@ func pos_to_gpos(pos):
 	return gpos
 	
 func is_valid_gpos(gpos):
-	if gpos.x >= 0 and gpos.y >= 0 and gpos.x < GRID_WIDTH and gpos.y < GRID_HEIGHT:
-		return true
-	return false
+	return gpos.x >= 0 and gpos.y >= 0 and gpos.x < GRID_WIDTH and gpos.y < GRID_HEIGHT
 
 func get_piece(gpos):
-	if is_valid_gpos(gpos):
-		return grid[gpos.x][gpos.y]
-	return null
+	return grid[gpos.x][gpos.y]
 
 func get_gpos(piece):
-	for p in get_pieces():
-		if p.piece == piece:
-			return Vector2(p.x, p.y)
+	for x in range(GRID_WIDTH):
+		for y in range(GRID_HEIGHT):
+			if grid[x][y] == piece:
+				return Vector2(x, y)
 	return null
-	
 
 func move_piece(piece, gpos):
-	if is_valid_gpos(gpos) and grid[gpos.x][gpos.y] == null:
-		for x in range(GRID_WIDTH):
-			for y in range(GRID_HEIGHT):
-				if grid[x][y] == piece:
-					grid[gpos.x][gpos.y] = piece
-					grid[x][y] = null
-					return true
+	for x in range(GRID_WIDTH):
+		for y in range(GRID_HEIGHT):
+			if grid[x][y] == piece:
+				grid[gpos.x][gpos.y] = piece
+				grid[x][y] = null
+				return true
 	return false
 
-func delete_piece(gpos):
-	if is_valid_gpos(gpos) and grid[gpos.x][gpos.y] != null:
-		grid[gpos.x][gpos.y].hide()
-		grid[gpos.x][gpos.y] = null
+func remove_piece_ref(gpos):
+	grid[gpos.x][gpos.y] = null
 
 func _process(delta):
 	for x in range(GRID_WIDTH):
