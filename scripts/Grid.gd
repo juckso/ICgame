@@ -50,8 +50,14 @@ func get_piece(gpos):
 		return grid[gpos.x][gpos.y]
 	return null
 
-func move_piece(piece, pos):
-	var gpos = pos_to_gpos(pos)
+func get_gpos(piece):
+	for p in get_pieces():
+		if p.piece == piece:
+			return Vector2(p.x, p.y)
+	return null
+	
+
+func move_piece(piece, gpos):
 	if is_valid_gpos(gpos) and grid[gpos.x][gpos.y] == null:
 		for x in range(GRID_WIDTH):
 			for y in range(GRID_HEIGHT):
@@ -61,8 +67,14 @@ func move_piece(piece, pos):
 					return true
 	return false
 
+func delete_piece(gpos):
+	if is_valid_gpos(gpos) and grid[gpos.x][gpos.y] != null:
+		grid[gpos.x][gpos.y].hide()
+		grid[gpos.x][gpos.y] = null
+
 func _process(delta):
 	for x in range(GRID_WIDTH):
 		for y in range(GRID_HEIGHT):
 			if grid[x][y] != null:
 				grid[x][y].position = Vector2(x * CELL_WIDTH, y * CELL_HEIGHT)
+				#print(grid[x][y].position)

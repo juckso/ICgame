@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/Dungeon_Master.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Grid.gd" type="Script" id=2]
 [ext_resource path="res://scenes/piece-scene.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/player-scene.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scripts/Bot.gd" type="Script" id=5]
+[ext_resource path="res://graphics/tilesets/tileset.png" type="Texture" id=4]
+[ext_resource path="res://scripts/Piece.gd" type="Script" id=5]
+[ext_resource path="res://scenes/player-scene.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scripts/Bot.gd" type="Script" id=7]
 
-[node name="Node2D" type="Node2D" index="0"]
+[node name="Node2D" type="Node2D"]
 
 [node name="Dungeon Master" type="Node2D" parent="." index="0"]
 
@@ -26,14 +28,35 @@ position = Vector2( 297.572, 56.2813 )
 _sections_unfolded = [ "Transform" ]
 player_character_path = NodePath("../../Player")
 
-[node name="Player" parent="Dungeon Master" index="1" instance=ExtResource( 4 )]
+[node name="Node2D" type="Sprite" parent="Dungeon Master/Grid" index="1"]
+
+position = Vector2( 90.8588, 130.748 )
+texture = ExtResource( 4 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 64 )
+script = ExtResource( 5 )
+_sections_unfolded = [ "Offset", "Region" ]
+player_character_path = NodePath("../../Bot")
+
+[node name="Player" parent="Dungeon Master" index="1" instance=ExtResource( 6 )]
 
 margin_right = 64.0
 margin_bottom = 64.0
 _sections_unfolded = [ "Rect" ]
 
-[node name="Bot" type="Node2D" parent="Dungeon Master" index="2"]
+[node name="Bot" type="Control" parent="Dungeon Master" index="2"]
 
-script = ExtResource( 5 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 7 )
 
 

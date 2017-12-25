@@ -7,7 +7,7 @@ func new_turn(turn):
 	pass
 
 func current_turn():
-	return false
+	return true
 
 func exit_turn():
 	pass

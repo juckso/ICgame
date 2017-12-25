@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 
-[node name="Player" type="Control"]
+[node name="Player" type="Control" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -77,5 +77,7 @@ popup_exclusive = false
 items = [  ]
 
 [connection signal="id_pressed" from="PopupMenu" to="." method="_on_PopupMenu_id_pressed"]
+
+[connection signal="popup_hide" from="PopupMenu" to="." method="_on_PopupMenu_popup_hide"]
 
 
